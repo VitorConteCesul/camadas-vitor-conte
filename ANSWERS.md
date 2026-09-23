@@ -38,9 +38,9 @@ D) A asserção I é uma proposição falsa, e a II é uma proposição verdadei
 E) As asserções I e II são proposições falsas.
 
 **Resposta:**
-
+A
 **Justificativa (opcional):**
-
+A I está certa porque o serviço vem no construtor, e a II explica isso ao mostrar que fica fácil trocar a implementação nos testes.
 ---
 
 ### Questão 2
@@ -67,9 +67,9 @@ D) `res.send(\`<h1>${name} created</h1>\`)`
 E) `const net = gross - gross * 0.11`
 
 **Resposta:**
-
+E
 **Justificativa (opcional):**
-
+O cálculo do salário é uma regra de negócio, por isso deve ficar dentro do Service.
 ---
 
 ### Questão 3
@@ -95,9 +95,9 @@ D) I, II e IV, apenas.
 E) I, II, III e IV.
 
 **Resposta:**
-
+D
 **Justificativa (opcional):**
-
+A III é a única errada, pois o Repository serve só para salvar no banco, não para fazer validações.
 ---
 
 ## Parte 4: estudo de caso
