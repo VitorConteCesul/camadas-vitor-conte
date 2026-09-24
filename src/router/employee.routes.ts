@@ -1,15 +1,23 @@
 import { Router } from 'express'
-import { EmployeeController } from '../controllers/employee.controller'
+import { CompanyController } from '../controllers/employee.controller'
 
-export function employeeRoutes(controller: EmployeeController): Router {
+export function companyRoutes(controller: CompanyController): Router {
   const router = Router()
 
-  router.post('/employees', (req, res, next) =>
+  router.get('/companies', (req, res, next) =>
+    controller.findAll(req, res, next)
+  )
+
+  router.get('/companies/:id', (req, res, next) =>
+    controller.findById(req, res, next)
+  )
+
+  router.post('/companies', (req, res, next) =>
     controller.create(req, res, next)
   )
 
-  router.get('/companies/:id/employees', (req, res, next) =>
-    controller.findByCompany(req, res, next)
+  router.delete('/companies/:id', (req, res, next) =>
+    controller.delete(req, res, next)
   )
 
   return router

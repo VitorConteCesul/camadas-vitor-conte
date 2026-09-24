@@ -1,21 +1,20 @@
 import { InvalidInput } from '../errors'
-import { NewEmployee } from '../types'
+import { NewCompany } from '../types'
 
-export function employeeDTO(body: unknown): NewEmployee {
+export function companyDTO(body: unknown): NewCompany {
   const data = body as Record<string, unknown>
   const fields: string[] = []
 
-  if (!data || typeof data.name !== 'string' || data.name.length < 3) {
+  if (!data || typeof data.name !== 'string' || data.name.trim().length < 3) {
     fields.push('name')
   }
-  if (!data || typeof data.email !== 'string' || !data.email.includes('@')) {
-    fields.push('email')
+
+  if (!data || typeof data.cnpj !== 'string' || !/^\d{14}$/.test(data.cnpj)) {
+    fields.push('cnpj')
   }
-  if (!data || typeof data.salary !== 'number') {
-    fields.push('salary')
-  }
-  if (!data || typeof data.companyId !== 'number') {
-    fields.push('companyId')
+
+  if (!data || typeof data.state !== 'string' || !/^[a-zA-Z]{2}$/.test(data.state)) {
+    fields.push('state')
   }
 
   if (fields.length > 0) {
@@ -24,8 +23,7 @@ export function employeeDTO(body: unknown): NewEmployee {
 
   return {
     name: data.name as string,
-    email: data.email as string,
-    salary: data.salary as number,
-    companyId: data.companyId as number
+    cnpj: data.cnpj as string,
+    state: (data.state as string).toUpperCase()
   }
 }

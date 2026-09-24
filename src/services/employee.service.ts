@@ -1,38 +1,45 @@
 import { NotFound, RuleViolation } from '../errors'
-import { Employee, NewEmployee } from '../types'
+import { Company, NewCompany } from '../types'
 import { CompanyRepository } from '../repositories/company.repository'
 import { EmployeeRepository } from '../repositories/employee.repository'
 
-const MINIMUM_WAGE = 1518
-const INSS = 0.11
-
-export class EmployeeService {
+export class CompanyService {
   constructor(
-    private employees: EmployeeRepository,
-    private companies: CompanyRepository
+    private companies: CompanyRepository,
+    private employees: EmployeeRepository
   ) {}
 
-  async create(data: NewEmployee): Promise<Employee> {
-    const company = this.companies.findById(data.companyId)
-    if (!company) throw new NotFound('company')
-
-    const gross = data.salary
-    if (gross < MINIMUM_WAGE) {
-      throw new RuleViolation('salary below minimum wage')
-    }
-
-    const net = gross - gross * INSS
-
-    return this.employees.save({
-      name: data.name,
-      email: data.email,
-      gross_salary: gross,
-      net_salary: net,
-      company_id: data.companyId
-    })
+  async findAll(): Promise<Company[]> {
+    return this.companies.findAll()
   }
 
-  async findByCompany(companyId: number): Promise<Employee[]> {
-    return this.employees.findByCompany(companyId)
+  async findById(id: number): Promise<Company> {
+    const company = this.companies.findById(id)
+    if (!company) {
+      throw new NotFound('company')
+    }
+    return company
+  }
+
+  async create(data: NewCompany): Promise<Company> {
+    const existing = this.companies.findByCnpj(data.cnpj)
+    if (existing) {
+      throw new RuleViolation('company with this cnpj already exists')
+    }
+    return this.companies.save(data)
+  }
+
+  async delete(id: number): Promise<void> {
+    const company = this.companies.findById(id)
+    if (!company) {
+      throw new NotFound('company')
+    }
+
+    const employees = this.employees.findByCompany(id)
+    if (employees.length > 0) {
+      throw new RuleViolation('cannot delete company with employees')
+    }
+
+    this.companies.delete(id)
   }
 }
