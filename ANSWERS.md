@@ -132,8 +132,11 @@ D) II e III, apenas.
 E) I, II e III.
 
 **Resposta:**
+B
+
 
 **Justificativa (opcional):**
+A I e a II estão corretas porque o desacoplamento permite reaproveitar o Service ao criar telas e isolar a regra de negócio no Service; a III é falsa pois quem responde em JSON é a camada de apresentação/controller, não o Service.
 
 ---
 
@@ -156,8 +159,10 @@ D) A asserção I é uma proposição falsa, e a II é uma proposição verdadei
 E) As asserções I e II são proposições falsas.
 
 **Resposta:**
+C
 
 **Justificativa (opcional):**
+
 
 ---
 
@@ -174,7 +179,7 @@ c) cite os arquivos do seu projeto que seriam alterados para atendê-lo.
 (Até 10 linhas.)
 
 **Resposta:**
-
+O pedido que exige maior esforço é o (b), no qual é necessário alterar o cálculo do INSS com base na UF da empresa. A separação em camadas facilita a manutenção ao delimitar onde cada responsabilidade reside, mas ela não desenvolve nem altera as regras automaticamente. Por isso, a nova regra de negócio precisa ser implementada manualmente. Para atender a essa solicitação, o principal arquivo alterado seria o src/services/employee.service.ts — para consultar o estado da empresa e aplicar a nova alíquota —, além dos arquivos de testes ou dados de inicialização (seed) relacionados ao cálculo.
 ---
 
 ### Questão 7 (discursiva)
@@ -190,3 +195,4 @@ c) descreva como você corrigiu, ou como corrigiria.
 (Até 10 linhas.)
 
 **Resposta:**
+O erro mais próximo de acontecer foi a inclusão de regras de negócio na camada de Controller ou DTO. Esse problema costuma surgir no arquivo src/dtos/company.dto.ts (ou company.controller.ts), quando tentamos verificar se o CNPJ já está cadastrado no banco diretamente na validação de entrada. A correção foi feita separando as responsabilidades: mantiveram-se no DTO apenas as validações de formato e sintaxe (como o tamanho e os dígitos do CNPJ), enquanto a verificação de duplicidade no banco de dados foi destinada exclusivamente ao CompanyService.
