@@ -39,6 +39,7 @@ E) As asserções I e II são proposições falsas.
 
 **Resposta:**
 A
+
 **Justificativa (opcional):**
 A I está certa porque o serviço vem no construtor, e a II explica isso ao mostrar que fica fácil trocar a implementação nos testes.
 ---
@@ -68,6 +69,7 @@ E) `const net = gross - gross * 0.11`
 
 **Resposta:**
 E
+
 **Justificativa (opcional):**
 O cálculo do salário é uma regra de negócio, por isso deve ficar dentro do Service.
 ---
@@ -96,6 +98,7 @@ E) I, II, III e IV.
 
 **Resposta:**
 D
+
 **Justificativa (opcional):**
 A III é a única errada, pois o Repository serve só para salvar no banco, não para fazer validações.
 ---
